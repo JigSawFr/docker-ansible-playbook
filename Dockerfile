@@ -1,14 +1,15 @@
-FROM centos:latest
+FROM armv7/armhf-ubuntu:14.04.3
 
+#ENV DEBIAN_FRONTEND noninteractive
 
-RUN yum clean all && \
-    yum -y install epel-release && \
-    yum -y install bash-completion && \
-    yum -y install ansible && \
-    yum -y install PyYAML python-jinja2 python-httplib2 python-keyczar python-paramiko python-setuptools git python-pip
+RUN apt-get update \
+        && apt-get upgrade -y \
+        && apt-get install -y vim software-properties-common
 
+RUN apt-add-repository -y ppa:ansible/ansible
 
-RUN yum install -y sshpass
+RUN apt-get update \
+        && apt-get install -y ansible
 
 RUN mkdir -p /mnt/ansible
 
